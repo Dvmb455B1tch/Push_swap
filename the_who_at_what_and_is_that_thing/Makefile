@@ -4,12 +4,12 @@ CC = cc                          # Compiler to use
 CFLAGS = -Wall -Wextra -Werror   # Compilation flags for strict checking
 
 SRCS = main.c \                  # List of source files
-       stack_operations.c \
+       stack_ops.c \
        stack_utils.c \
-       operations_swap.c \
-       operations_push.c \
-       operations_rotate.c \
-       operations_reverse_rotate.c \
+       ops_swap.c \
+       ops_push.c \
+       ops_rotate.c \
+       ops_reverse_rotate.c \
        parse_arguments.c \
        utils.c \
        sort_three.c \
