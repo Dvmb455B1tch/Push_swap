@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-04 12:00:00 by student           #+#    #+#             */
-/*   Updated: 2025-05-04 12:00:00 by student          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -30,11 +18,11 @@ t_stack	*create_node(int value);                /* Creates a new node with given
 void	push_front(t_stack **stack, t_stack *new);  /* Adds a node to the front of stack */
 t_stack	*pop_front(t_stack **stack);           /* Pops the first node from stack */
 void	free_stack(t_stack **stack);            /* Frees all nodes in the stack */
-int		stack_size(t_stack *stack);            /* Returns the number of nodes in stack */
-int		stack_is_sorted(t_stack *stack);       /* Checks if stack is sorted */
-int		get_min_value(t_stack *stack);         /* Gets minimum value in stack */
-int		get_max_value(t_stack *stack);         /* Gets maximum value in stack */
-int		get_index_in_stack(t_stack *stack, int value); /* Gets index of value in stack */
+int	stack_size(t_stack *stack);            /* Returns the number of nodes in stack */
+int	stack_is_sorted(t_stack *stack);       /* Checks if stack is sorted */
+int	get_min_value(t_stack *stack);         /* Gets minimum value in stack */
+int	get_max_value(t_stack *stack);         /* Gets maximum value in stack */
+int	get_index_in_stack(t_stack *stack, int value); /* Gets index of value in stack */
 
 /* Stack operations (push_swap instructions) */
 void	sa(t_stack **stack_a, int print);       /* Swap a - swap the first 2 elements */
@@ -50,8 +38,8 @@ void	rrb(t_stack **stack_b, int print);      /* Reverse rotate b - shift down by
 void	rrr(t_stack **stack_a, t_stack **stack_b, int print); /* Reverse rotate a & b */
 
 /* Input parsing and error handling */
-int		is_number(char *str);                  /* Checks if string is a valid number */
-int		is_duplicate(t_stack *stack, int value); /* Checks for duplicate values */
+int	is_number(char *str);                  /* Checks if string is a valid number */
+int	is_duplicate(t_stack *stack, int value); /* Checks for duplicate values */
 void	parse_arguments(int argc, char **argv, t_stack **stack_a); /* Parses args */
 void	error_exit(t_stack **stack_a, t_stack **stack_b); /* Error handling */
 
