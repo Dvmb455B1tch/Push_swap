@@ -38,7 +38,7 @@ static void	get_rotation_info(t_stack *stack, int index, int *rotation_dir, int 
 }
 
 /* Rotates stack B to prepare for pushing element back to A */
-static void	rotate_to_position(t_stack **stack, int index, char stack_name)
+static void __attribute__((unused)) rotate_to_position(t_stack **stack, int index, char stack_name)
 {
 	int	rotation_dir;    /* Direction of rotation (1 for ra/rb, -1 for rra/rrb) */
 	int	rotation_count;  /* Number of rotations needed */

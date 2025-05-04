@@ -3,14 +3,14 @@ NAME = push_swap                 # Name of the executable
 CC = cc                          # Compiler to use
 CFLAGS = -Wall -Wextra -Werror   # Compilation flags for strict checking
 
-SRCS = main.c \                  # List of source files
+SRCS = main.c \
        stack_ops.c \
        stack_utils.c \
        ops_swap.c \
        ops_push.c \
        ops_rotate.c \
        ops_reverse_rotate.c \
-       parse_arguments.c \
+       parse_args.c \
        utils.c \
        sort_three.c \
        sort_small.c \
