@@ -1,5 +1,4 @@
 #include "push_swap.h"
-
 /**
  * Return the absolute value of a number
  */
@@ -9,7 +8,6 @@ int	absolute_value(int nb)
 		return (-nb);
 	return (nb);
 }
-
 /**
  * Convert string to long integer
  */
@@ -44,7 +42,6 @@ long	ft_atoi(const char *str)
 	
 	return (result * sign);
 }
-
 /**
  * Check if a character is a digit
  */
@@ -52,7 +49,6 @@ int	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
-
 /**
  * Check if a character is a sign (+ or -)
  */
@@ -60,7 +56,6 @@ int	is_sign(char c)
 {
 	return (c == '+' || c == '-');
 }
-
 /**
  * Compare two strings
  */

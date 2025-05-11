@@ -15,7 +15,6 @@ void	reverse_rotate(t_node **stack)
 	*stack = last;
 	second_last->next = NULL;
 }
-
 /**
  * Reverse rotate stack A
  */
@@ -33,7 +32,6 @@ void	rrb(t_node **stack_b)
 	reverse_rotate(stack_b);
 	print_operation("rrb");
 }
-
 /**
  * Reverse rotate both stacks
  */

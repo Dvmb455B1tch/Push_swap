@@ -3,16 +3,16 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
+//# include <limits.h>
 
 typedef struct s_node
 {
-	int				value;
-	int				index;
-	int				position;
-	int				target_pos;
-	int				cost_a;
-	int				cost_b;
+	int	value;
+	int	index;
+	int	position;
+	int	target_pos;
+	int	cost_a;
+	int	cost_b;
 	struct s_node	*next;
 }	t_node;
 
@@ -21,9 +21,9 @@ t_node	*new_node(int value);
 void	add_node_back(t_node **stack, t_node *new);
 t_node	*get_last_node(t_node *stack);
 t_node	*get_second_last_node(t_node *stack);
-int		stack_size(t_node *stack);
+int	stack_size(t_node *stack);
 void	free_stack(t_node **stack);
-int		is_sorted(t_node *stack);
+int	is_sorted(t_node *stack);
 void	free_and_exit(t_node **stack_a, t_node **stack_b);
 
 /* Swap operations */
@@ -51,7 +51,7 @@ void	rrr(t_node **stack_a, t_node **stack_b);
 
 /* Position and cost functions */
 void	set_position(t_node **stack);
-int		get_lowest_index_position(t_node **stack);
+int	get_lowest_index_position(t_node **stack);
 void	set_target_position(t_node **stack_a, t_node **stack_b);
 void	calculate_cost(t_node **stack_a, t_node **stack_b);
 void	execute_cheapest_move(t_node **stack_a, t_node **stack_b);
@@ -68,19 +68,19 @@ void	sort(t_node **stack_a, t_node **stack_b);
 void	shift_stack(t_node **stack_a);
 
 /* Parsing and validation */
-int		check_input(int ac, char **av);
-int		is_number(char *str);
-int		has_duplicates(char **av);
-int		is_zero(char *str);
+int	check_input(int ac, char **av);
+int	is_number(char *str);
+int	has_duplicates(char **av);
+int	is_zero(char *str);
 t_node	*parse_input(int ac, char **av);
 void	assign_index(t_node *stack_a, int size);
 
 /* Helper functions */
 void	print_operation(char *op);
-int		absolute_value(int nb);
+int	absolute_value(int nb);
 long	ft_atoi(const char *str);
-int		is_digit(char c);
-int		is_sign(char c);
-int		str_compare(const char *s1, const char *s2);
+int	is_digit(char c);
+int	is_sign(char c);
+int	str_compare(const char *s1, const char *s2);
 
 #endif

@@ -35,7 +35,7 @@ int	get_lowest_index_position(t_node **stack)
 	
 	set_position(stack);
 	current = *stack;
-	lowest_index = INT_MAX;
+	lowest_index = 2147483647;//INT_MAX;
 	lowest_pos = 0;
 	
 	while (current)
@@ -60,7 +60,7 @@ static int	find_target_position(t_node **stack_a, int b_index)
 	int		target_pos;
 
 	current = *stack_a;
-	target_index = INT_MAX;
+	target_index = 2147483647;//INT_MAX;
 	target_pos = 0;
 	
 	// First try to find the closest greater index in stack A
@@ -75,10 +75,10 @@ static int	find_target_position(t_node **stack_a, int b_index)
 	}
 	
 	// If no greater index found, find the smallest index in stack A
-	if (target_index == INT_MAX)
+	if (target_index == 2147483647/*INT_MAX*/)
 	{
 		current = *stack_a;
-		target_index = INT_MAX;
+		target_index = 	2147483647;//INT_MAX;
 		
 		while (current)
 		{

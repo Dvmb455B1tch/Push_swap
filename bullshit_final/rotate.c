@@ -15,7 +15,6 @@ void	rotate(t_node **stack)
 	temp->next = NULL;
 	last->next = temp;
 }
-
 /**
  * Rotate stack A
  */
@@ -24,7 +23,6 @@ void	ra(t_node **stack_a)
 	rotate(stack_a);
 	print_operation("ra");
 }
-
 /**
  * Rotate stack B
  */
@@ -33,7 +31,6 @@ void	rb(t_node **stack_b)
 	rotate(stack_b);
 	print_operation("rb");
 }
-
 /**
  * Rotate both stacks
  */

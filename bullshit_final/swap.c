@@ -25,7 +25,6 @@ void	sa(t_node **stack_a)
 	swap(*stack_a);
 	print_operation("sa");
 }
-
 /**
  * Swap the top two elements of stack B
  */
@@ -34,7 +33,6 @@ void	sb(t_node **stack_b)
 	swap(*stack_b);
 	print_operation("sb");
 }
-
 /**
  * Swap the top two elements of both stacks
  */

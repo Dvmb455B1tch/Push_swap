@@ -1,5 +1,4 @@
 #include "push_swap.h"
-
 /**
  * Sort a stack with 3 elements using the minimum number of operations
  */
@@ -31,7 +30,6 @@ void	sort_three(t_node **stack)
 	if ((*stack)->index > (*stack)->next->index)
 		sa(stack);
 }
-
 /**
  * Push elements from stack A to stack B, leaving only 3 elements in A
  * Push smaller values first for better sorting efficiency
@@ -69,7 +67,6 @@ static void	push_all_except_three(t_node **stack_a, t_node **stack_b)
 		pushed++;
 	}
 }
-
 /**
  * Shift the stack so the lowest element is at the top
  */
@@ -103,7 +100,6 @@ void	shift_stack(t_node **stack_a)
 		}
 	}
 }
-
 /**
  * Main sorting algorithm
  */
@@ -141,8 +137,7 @@ void	sort(t_node **stack_a, t_node **stack_b)
 		set_target_position(stack_a, stack_b);
 		calculate_cost(stack_a, stack_b);
 		execute_cheapest_move(stack_a, stack_b);
-	}
-	
+	}	
 	// Finally, rotate stack A so lowest value is at the top
 	if (!is_sorted(*stack_a))
 		shift_stack(stack_a);

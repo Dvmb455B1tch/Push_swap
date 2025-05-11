@@ -1,5 +1,4 @@
 #include "push_swap.h"
-
 /**
  * Main function for push_swap
  */
@@ -7,7 +6,7 @@ int	main(int ac, char **av)
 {
 	t_node	*stack_a;
 	t_node	*stack_b;
-	int		size;
+	int	size;
 
 	if (ac < 2)
 		return (0);

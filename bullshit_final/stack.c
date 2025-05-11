@@ -1,5 +1,4 @@
 #include "push_swap.h"
-
 /**
  * Create a new node with the given value
  */
@@ -19,7 +18,6 @@ t_node	*new_node(int value)
 	node->next = NULL;
 	return (node);
 }
-
 /**
  * Add a node to the end of a stack
  */
@@ -37,7 +35,6 @@ void	add_node_back(t_node **stack, t_node *new)
 	last = get_last_node(*stack);
 	last->next = new;
 }
-
 /**
  * Get the last node in the stack
  */
@@ -49,7 +46,6 @@ t_node	*get_last_node(t_node *stack)
 		stack = stack->next;
 	return (stack);
 }
-
 /**
  * Get the second-to-last node in the stack
  */
@@ -61,7 +57,6 @@ t_node	*get_second_last_node(t_node *stack)
 		stack = stack->next;
 	return (stack);
 }
-
 /**
  * Get the size of the stack
  */
@@ -77,7 +72,6 @@ int	stack_size(t_node *stack)
 	}
 	return (size);
 }
-
 /**
  * Free all nodes in a stack
  */
@@ -95,7 +89,6 @@ void	free_stack(t_node **stack)
 	}
 	*stack = NULL;
 }
-
 /**
  * Check if stack is sorted
  */
@@ -109,7 +102,6 @@ int	is_sorted(t_node *stack)
 	}
 	return (1);
 }
-
 /**
  * Free both stacks and exit with error
  */

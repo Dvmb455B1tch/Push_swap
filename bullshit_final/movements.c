@@ -1,5 +1,4 @@
 #include "push_swap.h"
-
 /**
  * Execute simultaneous reverse rotations on both stacks
  */
@@ -12,7 +11,6 @@ static void	execute_reverse_rotate_both(t_node **stack_a, t_node **stack_b, int 
 		rrr(stack_a, stack_b);
 	}
 }
-
 /**
  * Execute simultaneous rotations on both stacks
  */
@@ -25,7 +23,6 @@ static void	execute_rotate_both(t_node **stack_a, t_node **stack_b, int *cost_a,
 		rr(stack_a, stack_b);
 	}
 }
-
 /**
  * Move stack A into position using the cost
  */
@@ -45,7 +42,6 @@ void	move_stack_a(t_node **stack_a, int *cost)
 		}
 	}
 }
-
 /**
  * Move stack B into position using the cost
  */
@@ -65,7 +61,6 @@ void	move_stack_b(t_node **stack_b, int *cost)
 		}
 	}
 }
-
 /**
  * Execute the move with the given cost
  */
