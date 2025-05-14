@@ -28,7 +28,7 @@ long	ft_atoi(const char *str)
 	result = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] == ' ' || str[i] >= 9 && str[i] <= 13)
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -59,7 +59,7 @@ int	str_compare(const char *s1, const char *s2)
 	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && s1 == s2[i])
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
 }

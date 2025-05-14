@@ -35,7 +35,7 @@ void	rra(t_node **stack_a)
 void	rrb(t_node **stack_b)
 {
 	reverse_rotate(stack_b);
-	print_opration("rrb");
+	print_operation("rrb");
 }
 
 void	rrr(t_node **stack_a, t_node **stack_b)

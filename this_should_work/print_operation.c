@@ -19,6 +19,6 @@ void	print_operation(char *op)
 	i = 0;
 	while (op[i])
 		i++;
-	write(1, op, 1);
-	write("\n");
+	write(1, op, i);
+	write(1, "\n", 1);
 }
