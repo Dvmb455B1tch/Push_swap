@@ -1,1 +1,0 @@
-(shuf -i 1-10 -n 10 | xargs ./push_swap)
