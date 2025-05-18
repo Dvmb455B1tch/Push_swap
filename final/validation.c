@@ -12,20 +12,6 @@
 
 #include "push_swap.h"
 
-int	is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (is_sign(str[i]) && str[i + 1] != '\0')
-		i++;
-	while (str[i] && is_digit(str[i]))
-		i++;
-	if (str[i] != '\0')
-		return (0);
-	return (1);
-}
-
 int	is_zero(char *str)
 {
 	int	i;
@@ -60,11 +46,12 @@ int	has_duplicates(char **av)
 	return (0);
 }
 
-static int	check_tokens(char *str, int *zero_count, int *found_token)
+static int	check_values_in_str(char *str, long *values, int *count)
 {
 	int		j;
 	int		k;
 	char	buffer[12];
+	long	value;
 
 	j = 0;
 	while (str[j])
@@ -79,30 +66,60 @@ static int	check_tokens(char *str, int *zero_count, int *found_token)
 		buffer[k] = '\0';
 		if (!is_number(buffer))
 			return (0);
-		*zero_count += is_zero(buffer);
-		*found_token = 1;
+		value = ft_atoi(buffer);
+		if (value > 2147483647 || value < -2147483648)
+			return (0);
+		values[(*count)++] = value;
 	}
 	return (1);
 }
 
-int	check_input(int ac, char **av)
+static int	check_duplicates_in_values(long *values, int count, int *zero_count)
 {
 	int	i;
-	int	zero_count;
-	int	found_token;
+	int	j;
+
+	i = 0;
+	*zero_count = 0;
+	while (i < count)
+	{
+		if (values[i] == 0)
+			(*zero_count)++;
+		j = i + 1;
+		while (j < count)
+		{
+			if (values[i] == values[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_input(int ac, char **av)
+{
+	int		i;
+	int		zero_count;
+	int		found_token;
+	long	values[1024];
+	int		count;
 
 	if (ac < 2)
 		return (0);
 	i = 1;
 	zero_count = 0;
 	found_token = 0;
+	count = 0;
 	while (i < ac)
 	{
-		if (!check_tokens(av[i], &zero_count, &found_token))
+		if (!check_values_in_str(av[i], values, &count))
 			return (0);
+		found_token = (count > 0);
 		i++;
 	}
-	if (!found_token || zero_count > 1 || has_duplicates(av))
+	if (!found_token || check_duplicates_in_values(values, count, &zero_count)
+		|| zero_count > 1 || has_duplicates(av))
 		return (0);
 	return (1);
 }
