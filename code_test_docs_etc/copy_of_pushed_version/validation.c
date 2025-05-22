@@ -100,26 +100,28 @@ static int	check_duplicates_in_values(long *values, int count, int *zero_count)
 int	check_input(int ac, char **av)
 {
 	int		i;
-	int		zero_count;
-	int		found_token;
-	long	values[1024];
+	int		j;
 	int		count;
+	long	values[1024];
 
 	if (ac < 2)
 		return (0);
-	i = 1;
-	zero_count = 0;
-	found_token = 0;
+	i = 0;
 	count = 0;
-	while (i < ac)
+	while (++i < ac)
 	{
+		if (av[i][0] == '\0')
+			return (0);
+		j = 0;
+		while (av[i][j] == ' ')
+			j++;
+		if (av[i][j] == '\0')
+			return (0);
 		if (!check_values_in_str(av[i], values, &count))
 			return (0);
-		found_token = (count > 0);
-		i++;
 	}
-	if (!found_token || check_duplicates_in_values(values, count, &zero_count)
-		|| zero_count > 1 || has_duplicates(av))
+	if (!count || check_duplicates_in_values(values, count, &i)
+		|| has_duplicates(av))
 		return (0);
 	return (1);
 }
