@@ -89,8 +89,8 @@ static void	handle_parse_error(t_node **stack_a)
  * by spaces. Each number is converted to an integer and added to stack_a. */
 static void	parse_line(t_node **stack_a, char *str)
 {
-	int		j;                /* Index for traversing the input string */
-	int		k;                /* Index for building number buffer */
+	int		j;        /* Index for traversing the input string */
+	int		k;        /* Index for building number buffer */
 	long	num;              /* Store number as long to check for INT overflow */
 	t_node	*new;             /* New node to add to stack */
 	char	buffer[12];       /* Buffer to hold a single number as string */
@@ -135,9 +135,11 @@ t_node	*parse_input(int ac, char **av)
 	return (stack_a);          /* Return the populated stack */
 }
 
-/* Assign index values to each node in stack_a based on their relative values.
- * The smallest value gets index 0, the next smallest gets 1, and so on.
- * This is crucial for the sorting algorithm as it normalizes the data. */
+ /* After this function, nodes will have index values where:
+     * The highest value has index = size - 1
+     * The lowest value has index = 0
+     * This simplifies sorting, as the original values are normalized to a range [0, size - 1]
+     */
 void	assign_index(t_node *stack_a, int size)
 {
 	t_node	*current;         /* For traversing the stack */
@@ -166,10 +168,7 @@ void	assign_index(t_node *stack_a, int size)
 		if (highest)
 			highest->index = i;  /* Assign index in descending order */
 	}
-	/* After this function, nodes will have index values where:
-	 * The highest value has index = 0
-	 * The lowest value has index = size-1
-	 * This makes sorting simpler as we just need to sort by index */
+
 }
 /* ************************************************************************** */
 /*                                                                            */

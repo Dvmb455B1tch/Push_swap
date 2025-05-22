@@ -1,0 +1,102 @@
+Step-by-Step Execution Flow
+Let's walk through the execution flow using the input:
+
+./push_swap 52 19 4 86 7 33 65 1 73 28
+
+1. Parsing and Initialization (main.c & parsing.c)
+Input Validation: Ensure all arguments are valid integers and there are no duplicates.
+
+
+Stack Initialization: Populate stack_a with the input values. stack_b starts empty.
+
+
+2. Assigning Indexes (utils.c)
+Indexing: Assign an index to each element in stack_a based on its value. The smallest number gets index 0, the next smallest gets index 1, and so on.
+
+For example:
+
+Value	Index
+1	0
+4	1
+7	2
+19	3
+28	4
+33	5
+52	6
+65	7
+73	8
+86	9
+
+3. Initial Sorting Phase (sort.c)
+Pushing to stack_b: Move all elements except the three largest ones from stack_a to stack_b. This reduces the problem size and allows for efficient sorting of the remaining elements in stack_a.
+
+For instance, push elements with indexes 0 to 6 to stack_b, leaving indexes 7, 8, and 9 in stack_a.
+
+4. Sorting Remaining Elements in stack_a (sort.c)
+Sorting 3 Elements: Sort the three remaining elements in stack_a using a simple sorting algorithm tailored for three elements.
+
+5. Assigning Positions (position.c)
+Set Positions: Assign a position to each node in both stacks, starting from 0 at the top.
+
+6. Determining Target Positions (position.c)
+Set Target Positions: For each node in stack_b, determine its target position in stack_a where it should be inserted to maintain sorted order.
+
+7. Calculating Costs (cost.c)
+Calculate Cost: For each node in stack_b, calculate:
+
+cost_b: Number of moves to bring the node to the top of stack_b.
+
+cost_a: Number of moves to bring stack_a to the correct position for insertion.
+
+The cost is positive for rotate operations and negative for reverse rotate operations.
+
+8. Executing the Cheapest Move (cost.c)
+Find Cheapest Move: Identify the node in stack_b with the lowest total cost (abs(cost_a) + abs(cost_b)).
+
+Execute Move: Perform the necessary rotations on both stacks and push the node from stack_b to stack_a.
+
+9. Repeat Steps 5-8
+Continue assigning positions, determining target positions, calculating costs, and executing the cheapest move until stack_b is empty.
+
+10. Final Adjustment (sort.c)
+Rotate stack_a: Rotate stack_a to bring the smallest element to the top, ensuring the stack is fully sorted.
+
+Example: Calculating Costs
+Let's consider a node in stack_b with the following properties:
+
+Position in stack_b: 4
+
+Target Position in stack_a: 2
+
+Size of stack_b: 6
+
+Size of stack_a: 4
+
+Calculating cost_b:
+
+Since position 4 > size_b / 2 (3), it's more efficient to reverse rotate.
+
+cost_b = (6 - 4) * -1 = -2
+
+Calculating cost_a:
+
+Since target position 2 <= size_a / 2 (2), it's more efficient to rotate.
+
+cost_a = 2
+
+Total Cost: abs(-2) + abs(2) = 4
+
+Integration of All Components
+Here's how all the components interact:
+
+Initialization: main.c and parsing.c handle input and stack setup.
+
+Indexing: utils.c assigns indexes to elements.
+
+Sorting Logic: sort.c manages the overall sorting process.
+
+Positioning: position.c assigns positions and target positions.
+
+Cost Calculation: cost.c computes the cost for each move.
+
+Stack Operations: stack_operations.c performs the actual stack manipulations.
