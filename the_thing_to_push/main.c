@@ -12,6 +12,17 @@
 
 #include "push_swap.h"
 
+void	print_operation(char *op)
+{
+	int	i;
+
+	i = 0;
+	while (op[i])
+		i++;
+	write(1, op, i);
+	write(1, "\n", 1);
+}
+
 int	main(int ac, char **av)
 {
 	t_node	*stack_a;

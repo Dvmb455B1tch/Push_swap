@@ -17,7 +17,6 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c \
-      print_operation.c \
       stack.c \
       cost.c \
       position.c \
@@ -51,4 +50,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
