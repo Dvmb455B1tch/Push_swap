@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: dvmb455b1tch <dvmb455b1tch@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:20:51 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/13 13:54:55 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/13 19:13:54 by dvmb455b1tc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	is_zero(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (is_sign(str[i]))
-		i++;
-	while (str[i] && str[i] == '0')
-		i++;
-	if (str[i] != '\0')
-		return (0);
-	return (1);
-}
 
 int	has_duplicates(char **av)
 {
@@ -102,26 +88,56 @@ int	check_input(int ac, char **av)
 	int		i;
 	int		j;
 	int		count;
-	long	values[1024];
+	long	*values;
+	int		max_values;
 
 	if (ac < 2)
+		return (0);
+	max_values = 0;
+	i = 0;
+	while (++i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (av[i][j] == ' ')
+				max_values++;
+			j++;
+		}
+		max_values++;
+	}
+	values = malloc(sizeof(long) * max_values);
+	if (!values)
 		return (0);
 	i = 0;
 	count = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '\0')
+		{
+			free(values);
 			return (0);
+		}
 		j = 0;
 		while (av[i][j] == ' ')
 			j++;
 		if (av[i][j] == '\0')
+		{
+			free(values);
 			return (0);
+		}
 		if (!check_values_in_str(av[i], values, &count))
+		{
+			free(values);
 			return (0);
+		}
 	}
 	if (!count || check_duplicates_in_values(values, count, &i)
 		|| has_duplicates(av))
+	{
+		free(values);
 		return (0);
+	}
+	free(values);
 	return (1);
 }

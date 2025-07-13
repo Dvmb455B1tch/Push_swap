@@ -6,7 +6,7 @@
 /*   By: dvmb455b1tch <dvmb455b1tch@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:57:29 by riramana          #+#    #+#             */
-/*   Updated: 2025/07/13 18:44:12 by dvmb455b1tc      ###   ########.fr       */
+/*   Updated: 2025/07/13 19:14:18 by dvmb455b1tc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	shift_stack(t_node **stack_a);
 int		check_input(int ac, char **av);
 int		is_number(char *str);
 int		has_duplicates(char **av);
-int		is_zero(char *str);
 t_node	*parse_input(int ac, char **av);
 void	assign_index(t_node *stack_a, int size);
 
