@@ -51,3 +51,11 @@ int	is_sorted(t_node *stack)
 	}
 	return (1);
 }
+
+void	free_and_exit(t_node **stack_a, t_node **stack_b)
+{
+	free_stack(stack_a);
+	free_stack(stack_b);
+	write(2, "Error\n", 6);
+	exit(1);
+}

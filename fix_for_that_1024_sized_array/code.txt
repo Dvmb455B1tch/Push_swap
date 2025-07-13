@@ -1,0 +1,1160 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cost.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 10:44:50 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/14 11:13:12 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	calculate_cost(t_node **stack_a, t_node **stack_b)
+{
+	t_node	*current;
+	int		size_a;
+	int		size_b;
+
+	if (!stack_a || !*stack_a || !stack_b || !*stack_b)
+		return ;
+	size_a = stack_size(*stack_a);
+	size_b = stack_size(*stack_b);
+	current = *stack_b;
+	while (current)
+	{
+		current->cost_b = current->position;
+		if (current->position > size_b / 2)
+			current->cost_b = (size_b - current->position) * -1;
+		current->cost_a = current->target_pos;
+		if (current->target_pos > size_a / 2)
+			current->cost_a = (size_a - current->target_pos) * -1;
+		current = current->next;
+	}
+}
+
+void	execute_cheapest_move(t_node **stack_a, t_node **stack_b)
+{
+	t_node	*current;
+	int		cheapest_cost;
+	int		cost_a;
+	int		cost_b;
+
+	if (!stack_a || !*stack_a || !stack_b || !*stack_b)
+		return ;
+	current = *stack_b;
+	cheapest_cost = 2147483647;
+	while (current)
+	{
+		if (absolute_value(current->cost_a) + absolute_value(current->cost_b)
+			< absolute_value(cheapest_cost))
+		{
+			cheapest_cost = absolute_value(current->cost_a)
+				+ absolute_value(current->cost_b);
+			cost_a = current->cost_a;
+			cost_b = current->cost_b;
+		}
+		current = current->next;
+	}
+	execute_move(stack_a, stack_b, cost_a, cost_b);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 11:19:03 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/18 11:19:05 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static void	handle_parse_error(t_node **stack_a)
+{
+	free_stack(stack_a);
+	write(2, "Error\n", 6);
+	exit(1);
+}
+
+static void	parse_line(t_node **stack_a, char *str)
+{
+	int		j;
+	int		k;
+	long	num;
+	t_node	*new;
+	char	buffer[12];
+
+	j = 0;
+	while (str[j])
+	{
+		while (str[j] == ' ')
+			j++;
+		if (str[j] == '\0')
+			break ;
+		k = 0;
+		while (str[j] && str[j] != ' ' && k < 11)
+			buffer[k++] = str[j++];
+		buffer[k] = '\0';
+		num = ft_atoi(buffer);
+		if (num > 2147483647 || num < -2147483648)
+			handle_parse_error(stack_a);
+		new = new_node((int)num);
+		if (!new)
+			handle_parse_error(stack_a);
+		add_node_back(stack_a, new);
+	}
+}
+
+t_node	*parse_input(int ac, char **av)
+{
+	t_node	*stack_a;
+	int		i;
+
+	stack_a = NULL;
+	i = 1;
+	while (i < ac)
+	{
+		parse_line(&stack_a, av[i]);
+		i++;
+	}
+	return (stack_a);
+}
+
+void	assign_index(t_node *stack_a, int size)
+{
+	t_node	*current;
+	t_node	*highest;
+	int		value;
+	int		i;
+
+	if (!stack_a)
+		return ;
+	i = size;
+	while (--i >= 0)
+	{
+		current = stack_a;
+		value = -2147483648;
+		highest = NULL;
+		while (current)
+		{
+			if (current->value > value && current->index == 0)
+			{
+				value = current->value;
+				highest = current;
+			}
+			current = current->next;
+		}
+		if (highest)
+			highest->index = i;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 09:06:32 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 09:18:10 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	print_operation(char *op)
+{
+	int	i;
+
+	i = 0;
+	while (op[i])
+		i++;
+	write(1, op, i);
+	write(1, "\n", 1);
+}
+
+int	main(int ac, char **av)
+{
+	t_node	*stack_a;
+	t_node	*stack_b;
+	int		size;
+
+	if (ac < 2)
+		return (0);
+	if (!check_input(ac, av))
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	stack_b = NULL;
+	stack_a = parse_input(ac, av);
+	size = stack_size(stack_a);
+	assign_index(stack_a, size);
+	if (!is_sorted(stack_a))
+		sort(&stack_a, &stack_b);
+	free_stack(&stack_a);
+	free_stack(&stack_b);
+	return (0);
+}
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/13 14:48:53 by riramana          #+#    #+#              #
+#    Updated: 2025/05/13 14:56:58 by riramana         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = push_swap
+
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror
+
+SRC = main.c \
+      stack.c \
+      cost.c \
+      position.c \
+      sort.c \
+      validation.c \
+      utils.c \
+      movements.c \
+      swap.c \
+      push.c \
+      rotate.c \
+      reverse_rotate.c \
+      stack_utils.c \
+      input.c
+
+OBJ = $(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movements.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 11:33:49 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/14 11:34:37 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static void	execute_reverse_rotate_both(t_node **stack_a, t_node **stack_b,
+		int *cost_a, int *cost_b)
+{
+	while (*cost_a < 0 && *cost_b < 0)
+	{
+		(*cost_a)++;
+		(*cost_b)++;
+		rrr(stack_a, stack_b);
+	}
+}
+
+static void	execute_rotate_both(t_node **stack_a, t_node **stack_b,
+		int *cost_a, int *cost_b)
+{
+	while (*cost_a > 0 && *cost_b > 0)
+	{
+		(*cost_a)--;
+		(*cost_b)--;
+		rr(stack_a, stack_b);
+	}
+}
+
+void	move_stack_a(t_node **stack_a, int *cost)
+{
+	while (*cost)
+	{
+		if (*cost > 0)
+		{
+			ra(stack_a);
+			(*cost)--;
+		}
+		else if (*cost < 0)
+		{
+			rra(stack_a);
+			(*cost)++;
+		}
+	}
+}
+
+void	move_stack_b(t_node **stack_b, int *cost)
+{
+	while (*cost)
+	{
+		if (*cost > 0)
+		{
+			rb(stack_b);
+			(*cost)--;
+		}
+		else if (*cost < 0)
+		{
+			rrb(stack_b);
+			(*cost)++;
+		}
+	}
+}
+
+void	execute_move(t_node **stack_a, t_node **stack_b, int cost_a, int cost_b)
+{
+	if (cost_a < 0 && cost_b < 0)
+		execute_reverse_rotate_both(stack_a, stack_b, &cost_a, &cost_b);
+	else if (cost_a > 0 && cost_b > 0)
+		execute_rotate_both(stack_a, stack_b, &cost_a, &cost_b);
+	move_stack_a(stack_a, &cost_a);
+	move_stack_b(stack_b, &cost_b);
+	pa(stack_a, stack_b);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   position.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 11:39:13 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/14 11:41:46 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	set_position(t_node **stack)
+{
+	t_node	*current;
+	int		i;
+
+	if (!stack || !*stack)
+		return ;
+	current = *stack;
+	i = 0;
+	while (current)
+	{
+		current->position = i;
+		current = current->next;
+		i++;
+	}
+}
+
+int	get_lowest_index_position(t_node **stack)
+{
+	t_node	*current;
+	int		lowest_index;
+	int		lowest_pos;
+
+	if (!stack || !*stack)
+		return (-1);
+	set_position(stack);
+	current = *stack;
+	lowest_index = 2147483647;
+	lowest_pos = 0;
+	while (current)
+	{
+		if (current->index < lowest_index)
+		{
+			lowest_index = current->index;
+			lowest_pos = current->position;
+		}
+		current = current->next;
+	}
+	return (lowest_pos);
+}
+
+static int	find_min_index_position(t_node **stack_a)
+{
+	t_node	*current;
+	int		target_index;
+	int		target_pos;
+
+	current = *stack_a;
+	target_index = 2147483647;
+	target_pos = 0;
+	while (current)
+	{
+		if (current->index < target_index)
+		{
+			target_index = current->index;
+			target_pos = current->position;
+		}
+		current = current->next;
+	}
+	return (target_pos);
+}
+
+static int	find_target_position(t_node **stack_a, int b_index)
+{
+	t_node	*current;
+	int		target_index;
+	int		target_pos;
+
+	current = *stack_a;
+	target_index = 2147483647;
+	target_pos = 0;
+	while (current)
+	{
+		if (current->index > b_index && current->index < target_index)
+		{
+			target_index = current->index;
+			target_pos = current->position;
+		}
+		current = current->next;
+	}
+	if (target_index == 2147483647)
+		target_pos = find_min_index_position(stack_a);
+	return (target_pos);
+}
+
+void	set_target_position(t_node **stack_a, t_node **stack_b)
+{
+	t_node	*current_b;
+
+	if (!stack_a || !*stack_a || !stack_b || !*stack_b)
+		return ;
+	set_position(stack_a);
+	set_position(stack_b);
+	current_b = *stack_b;
+	while (current_b)
+	{
+		current_b->target_pos = find_target_position(stack_a, current_b->index);
+		current_b = current_b->next;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 14:05:04 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 14:10:06 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	push(t_node **src, t_node **dest)
+{
+	t_node	*temp;
+
+	if (!*src)
+		return ;
+	temp = *src;
+	*src = (*src)->next;
+	temp->next = *dest;
+	*dest = temp;
+}
+
+void	pa(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_b, stack_a);
+	print_operation("pa");
+}
+
+void	pb(t_node **stack_a, t_node **stack_b)
+{
+	push(stack_a, stack_b);
+	print_operation("pb");
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 14:57:29 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 17:08:40 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include <unistd.h>
+# include <stdlib.h>
+
+typedef struct s_node
+{
+	int				value;
+	int				index;
+	int				position;
+	int				target_pos;
+	int				cost_a;
+	int				cost_b;
+	struct s_node	*next;
+}	t_node;
+
+/*Stack operations*/
+t_node	*new_node(int value);
+void	add_node_back(t_node **stack, t_node *new);
+t_node	*get_last_node(t_node *stack);
+t_node	*get_second_last_node(t_node *stack);
+int		stack_size(t_node *stack);
+void	free_stack(t_node **stack);
+int		is_sorted(t_node *stack);
+void	free_and_exit(t_node **stack_a, t_node **stack_b);
+
+/*Swap operations*/
+void	swap(t_node *stack);
+void	sa(t_node **stack_a);
+void	sb(t_node **stack_b);
+void	ss(t_node **stack_a, t_node **stack_b);
+
+/*Push operations*/
+void	push(t_node **src, t_node **dest);
+void	pa(t_node **stack_a, t_node **stack_b);
+void	pb(t_node **stack_a, t_node **stack_b);
+
+/* Rotate operations */
+void	rotate(t_node **stack);
+void	ra(t_node **stack_a);
+void	rb(t_node **stack_b);
+void	rr(t_node **stack_a, t_node **stack_b);
+
+/* Reverse rotate operations */
+void	reverse_rotate(t_node **stack);
+void	rra(t_node **stack_a);
+void	rrb(t_node **stack_b);
+void	rrr(t_node **stack_a, t_node **stack_b);
+
+/* Position and cost functions */
+void	set_position(t_node **stack);
+int		get_lowest_index_position(t_node **stack);
+void	set_target_position(t_node **stack_a, t_node **stack_b);
+void	calculate_cost(t_node **stack_a, t_node **stack_b);
+void	execute_cheapest_move(t_node **stack_a, t_node **stack_b);
+
+/* Movement execution */
+void	move_both_stacks(t_node **stack_a, t_node **stack_b, int *cost_a,
+			int *cost_b);
+void	move_stack_a(t_node **stack_a, int *cost);
+void	move_stack_b(t_node **stack_b, int *cost);
+void	execute_move(t_node **stack_a, t_node **stack_b, int cost_a,
+			int cost_b);
+
+/* Sorting algorithms */
+void	sort_three(t_node **stack);
+void	sort(t_node **stack_a, t_node **stack_b);
+void	shift_stack(t_node **stack_a);
+
+/* Parsing and validation */
+int		check_input(int ac, char **av);
+int		is_number(char *str);
+int		has_duplicates(char **av);
+int		is_zero(char *str);
+t_node	*parse_input(int ac, char **av);
+void	assign_index(t_node *stack_a, int size);
+
+/* Helper functions */
+void	print_operation(char *op);
+int		absolute_value(int nb);
+long	ft_atoi(const char *str);
+int		is_digit(char c);
+int		is_sign(char c);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 14:19:15 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 14:29:30 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	reverse_rotate(t_node **stack)
+{
+	t_node	*last;
+	t_node	*second_last;
+
+	if (!*stack || !(*stack)->next)
+		return ;
+	last = get_last_node(*stack);
+	second_last = get_second_last_node(*stack);
+	last->next = *stack;
+	*stack = last;
+	second_last->next = NULL;
+}
+
+void	rra(t_node **stack_a)
+{
+	reverse_rotate(stack_a);
+	print_operation("rra");
+}
+
+void	rrb(t_node **stack_b)
+{
+	reverse_rotate(stack_b);
+	print_operation("rrb");
+}
+
+void	rrr(t_node **stack_a, t_node **stack_b)
+{
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);
+	print_operation("rrr");
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 14:10:45 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 14:17:56 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	rotate(t_node **stack)
+{
+	t_node	*temp;
+	t_node	*last;
+
+	if (!*stack || !(*stack)->next)
+		return ;
+	temp = *stack;
+	*stack = (*stack)->next;
+	last = get_last_node(*stack);
+	temp->next = NULL;
+	last->next = temp;
+}
+
+void	ra(t_node **stack_a)
+{
+	rotate(stack_a);
+	print_operation("ra");
+}
+
+void	rb(t_node **stack_b)
+{
+	rotate(stack_b);
+	print_operation("rb");
+}
+
+void	rr(t_node **stack_a, t_node **stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	print_operation("rr");
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 11:14:14 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/14 11:21:29 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	sort_three(t_node **stack)
+{
+	int	highest_index;
+
+	if (!stack || !*stack || !(*stack)->next || !(*stack)->next->next)
+		return ;
+	if (is_sorted(*stack))
+		return ;
+	highest_index = (*stack)->index;
+	if ((*stack)->next->index > highest_index)
+		highest_index = (*stack)->next->index;
+	if ((*stack)->next->next->index > highest_index)
+		highest_index = (*stack)->next->next->index;
+	if ((*stack)->index == highest_index)
+		ra(stack);
+	else if ((*stack)->next->index == highest_index)
+		rra(stack);
+	if ((*stack)->index > (*stack)->next->index)
+		sa(stack);
+}
+
+static void	push_all_except_three(t_node **stack_a, t_node **stack_b)
+{
+	int	size;
+	int	pushed;
+	int	i;
+
+	size = stack_size(*stack_a);
+	if (size <= 3)
+		return ;
+	pushed = 0;
+	i = 0;
+	while (size > 6 && i < size && pushed < size / 2)
+	{
+		if ((*stack_a)->index <= size / 2)
+		{
+			pb(stack_a, stack_b);
+			pushed++;
+		}
+		else
+			ra(stack_a);
+		i++;
+	}
+	while (size - pushed > 3)
+	{
+		pb(stack_a, stack_b);
+		pushed++;
+	}
+}
+
+void	shift_stack(t_node **stack_a)
+{
+	int	lowest_pos;
+	int	size;
+
+	if (!stack_a || !*stack_a)
+		return ;
+	size = stack_size(*stack_a);
+	lowest_pos = get_lowest_index_position(stack_a);
+	if (lowest_pos > size / 2)
+	{
+		while (lowest_pos < size)
+		{
+			rra(stack_a);
+			lowest_pos++;
+		}
+	}
+	else
+	{
+		while (lowest_pos > 0)
+		{
+			ra(stack_a);
+			lowest_pos--;
+		}
+	}
+}
+
+void	sort(t_node **stack_a, t_node **stack_b)
+{
+	if (!stack_a || !*stack_a)
+		return ;
+	if (is_sorted(*stack_a))
+		return ;
+	if (stack_size(*stack_a) == 2)
+	{
+		if ((*stack_a)->value > (*stack_a)->next->value)
+			sa(stack_a);
+		return ;
+	}
+	if (stack_size(*stack_a) == 3)
+	{
+		sort_three(stack_a);
+		return ;
+	}
+	push_all_except_three(stack_a, stack_b);
+	sort_three(stack_a);
+	while (*stack_b)
+	{
+		set_target_position(stack_a, stack_b);
+		calculate_cost(stack_a, stack_b);
+		execute_cheapest_move(stack_a, stack_b);
+	}
+	if (!is_sorted(*stack_a))
+		shift_stack(stack_a);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 10:14:30 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/14 10:14:33 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+t_node	*new_node(int value)
+{
+	t_node	*node;
+
+	node = malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->value = value;
+	node->index = 0;
+	node->position = -1;
+	node->target_pos = -1;
+	node->cost_a = -1;
+	node->cost_b = -1;
+	node->next = NULL;
+	return (node);
+}
+
+void	add_node_back(t_node **stack, t_node *new)
+{
+	t_node	*last;
+
+	if (!new)
+		return ;
+	if (!*stack)
+	{
+		*stack = new;
+		return ;
+	}
+	last = get_last_node(*stack);
+	last->next = new;
+}
+
+t_node	*get_last_node(t_node *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack->next)
+		stack = stack->next;
+	return (stack);
+}
+
+t_node	*get_second_last_node(t_node *stack)
+{
+	if (!stack || !stack->next)
+		return (NULL);
+	while (stack->next && stack->next->next)
+		stack = stack->next;
+	return (stack);
+}
+
+int	stack_size(t_node *stack)
+{
+	int	size;
+
+	size = 0;
+	while (stack)
+	{
+		size++;
+		stack = stack->next;
+	}
+	return (size);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 11:18:51 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/18 11:18:53 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	is_number(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (is_sign(str[i]) && str[i + 1] != '\0')
+		i++;
+	while (str[i] && is_digit(str[i]))
+		i++;
+	if (str[i] != '\0')
+		return (0);
+	return (1);
+}
+
+void	free_stack(t_node **stack)
+{
+	t_node	*tmp;
+
+	if (!stack || !*stack)
+		return ;
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free(*stack);
+		*stack = tmp;
+	}
+	*stack = NULL;
+}
+
+int	is_sorted(t_node *stack)
+{
+	while (stack && stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+void	free_and_exit(t_node **stack_a, t_node **stack_b)
+{
+	free_stack(stack_a);
+	free_stack(stack_b);
+	write(2, "Error\n", 6);
+	exit(1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   swap.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 13:57:22 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 14:04:13 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	swap(t_node *stack)
+{
+	int	temp;
+
+	if (!stack || !stack->next)
+		return ;
+	temp = stack->value;
+	stack->value = stack->next->value;
+	stack->next->value = temp;
+	temp = stack->index;
+	stack->index = stack->next->index;
+	stack->next->index = temp;
+}
+
+void	sa(t_node **stack_a)
+{
+	swap(*stack_a);
+	print_operation("sa");
+}
+
+void	sb(t_node **stack_b)
+{
+	swap(*stack_b);
+	print_operation("sb");
+}
+
+void	ss(t_node **stack_a, t_node **stack_b)
+{
+	swap(*stack_a);
+	swap(*stack_b);
+	print_operation("ss");
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 14:35:54 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 14:46:49 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	absolute_value(int nb)
+{
+	if (nb < 0)
+		return (-nb);
+	return (nb);
+}
+
+long	ft_atoi(const char *str)
+{
+	long	result;
+	int		sign;
+	int		i;
+
+	result = 0;
+	sign = 1;
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
+}
+
+int	is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int	is_sign(char c)
+{
+	return (c == '+' || c == '-');
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/13 09:20:51 by riramana          #+#    #+#             */
+/*   Updated: 2025/05/13 13:54:55 by riramana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	is_zero(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (is_sign(str[i]))
+		i++;
+	while (str[i] && str[i] == '0')
+		i++;
+	if (str[i] != '\0')
+		return (0);
+	return (1);
+}
+
+int	has_duplicates(char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (av[i])
+	{
+		j = 1;
+		while (av[j])
+		{
+			if (i != j && ft_atoi(av[i]) == ft_atoi(av[j]))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+static int	check_values_in_str(char *str, long *values, int *count)
+{
+	int		j;
+	int		k;
+	char	buffer[12];
+	long	value;
+
+	j = 0;
+	while (str[j])
+	{
+		while (str[j] == ' ')
+			j++;
+		if (str[j] == '\0')
+			break ;
+		k = 0;
+		while (str[j] && str[j] != ' ' && k < 11)
+			buffer[k++] = str[j++];
+		buffer[k] = '\0';
+		if (!is_number(buffer))
+			return (0);
+		value = ft_atoi(buffer);
+		if (value > 2147483647 || value < -2147483648)
+			return (0);
+		values[(*count)++] = value;
+	}
+	return (1);
+}
+
+static int	check_duplicates_in_values(long *values, int count, int *zero_count)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	*zero_count = 0;
+	while (i < count)
+	{
+		if (values[i] == 0)
+			(*zero_count)++;
+		j = i + 1;
+		while (j < count)
+		{
+			if (values[i] == values[j])
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_input(int ac, char **av)
+{
+	int		i;
+	int		j;
+	int		count;
+	long	values[1024];
+
+	if (ac < 2)
+		return (0);
+	i = 0;
+	count = 0;
+	while (++i < ac)
+	{
+		if (av[i][0] == '\0')
+			return (0);
+		j = 0;
+		while (av[i][j] == ' ')
+			j++;
+		if (av[i][j] == '\0')
+			return (0);
+		if (!check_values_in_str(av[i], values, &count))
+			return (0);
+	}
+	if (!count || check_duplicates_in_values(values, count, &i)
+		|| has_duplicates(av))
+		return (0);
+	return (1);
+}

@@ -1,0 +1,153 @@
+Why is index needed when we already have value?
+
+What does the target_pos help with when moving elements from b to a?
+
+What would go wrong if you omitted the position, cost_a, or cost_b fields?
+
+Why is ft_atoi used with long here and not int?
+
+How does assign_index ensure every number gets a unique index?
+
+Why do we need add_node_back instead of inserting at the head?
+
+What would happen if we didn’t check for overflows before converting to int?
+
+Why does check_input collect all values into a long[] before checking for duplicates?
+
+Why is is_zero needed separately if we already check for duplicates?
+
+Why does main() check is_sorted(stack_a) before calling sort()?
+
+What would happen if you didn’t call assign_index before sorting?
+
+What design decision is being enforced by printing operations with a helper?
+
+Why is it better to isolate and sort only 3 elements first instead of sorting in place?
+
+What benefits does the index abstraction provide in sorting?
+
+What are the advantages of always rotating the smallest element to the top at the end?
+
+Why is it better to compute move cost instead of choosing the first available b node?
+
+How does target position preserve sorted order in a?
+
+What would happen if we only used ra/rb and never reverse-rotated?
+
+Why does swap() exchange both value and index, not just one?
+
+What structural change happens in a linked list when using rotate vs reverse_rotate?
+
+How does combining operations like rr reduce total operation count?
+
+Why is this rotation step needed even after all elements are inserted back into a?
+
+What if you didn’t run shift_stack() — what could go wrong during evaluation?
+
+Why does it use position instead of scanning by value?
+
+Why might using atoi instead of ft_atoi lead to subtle bugs?
+
+Why does is_number not allow empty strings like " "?
+
+When is free_and_exit() used vs just free_stack()?
+
+What if the input had been "2 3 1"? Would ra still be the first move?
+
+How many moves would a worst-case 3-element input require?
+
+What’s the benefit of sorting 3 elements in a specialized function?
+
+
+🔧 Structure & Purpose
+ What data structure represents each stack?
+
+ What fields exist in t_node, and why?
+
+ Why do we index the values?
+
+🧪 Input & Safety
+ How does input parsing prevent overflows?
+
+ What does is_zero catch that ft_atoi doesn’t?
+
+ Why do you need multiple duplicate checks?
+
+🔁 Sorting Algorithm
+ What are the three phases of the sorting algorithm?
+
+ Why isolate 3 elements before sorting?
+
+ How are cost_a and cost_b computed and used?
+
+ What’s the logic behind target position calculation?
+
+ How does the final shift_stack() ensure sort correctness?
+
+⚙️ Operations
+ What’s the effect of ra, rra, pa, sa in memory?
+
+ How are operations printed?
+
+ When are combo ops like rr/rrr used?
+
+🧠 Defensive Thinking
+ What would break if you skipped assign_index()?
+
+ How does your program minimize operation count?
+
+ Why is cost-based re-insertion smarter than brute force?
+
+ ✅ Syntax & Semantics
+ What’s the difference between t_node **stack and t_node *stack in function parameters?
+
+ Why are pointers passed as double pointers (**) in almost all stack manipulation functions?
+
+ What’s the purpose of using while (*cost) instead of while (*cost != 0) in move_stack_a()?
+
+ What does this line do?
+temp = *src;
+*src = (*src)->next;
+temp->next = *dest;
+*dest = temp;
+
+Why is buffer[12] used during parsing?
+
+Why do we use exit(1) after writing "Error\n" — and not return?
+
+What’s the use of static in helper functions like handle_parse_error?
+
+🔎 Norm Compliance & Practices
+ Why do we avoid dynamic memory allocation outside of new_node()?
+
+ Why is write() used instead of printf()?
+
+ Why is code like this used instead of min() or max() macros?
+
+if (a > b / 2)
+  a = (b - a) * -1;
+
+🔄 What’s the weakness of the original Turk algorithm?
+ Why does it sometimes use greedy or brute-force insertion?
+
+ What edge cases cause unnecessary rotations or double handling of certain nodes?
+
+ How does it fail to optimize the path between two stacks?
+
+ | Aspect       | Original Turk                         | Improved Version                                |
+| ------------ | ------------------------------------- | ----------------------------------------------- |
+| Reinsertion  | Fixed direction or partial heuristics | Cost-based reinsertion per element              |
+| Cost model   | Often missing or approximate          | `cost_a` + `cost_b` with reverse/rotate options |
+| Combo moves  | Rare or missing                       | Supports `rr`, `rrr` for dual optimization      |
+| Target logic | Naive top/bottom                      | Closest greater index with fallback             |
+
+🧠 Questions to Evaluate Mastery
+ Why is it more optimal to compute and compare total cost rather than just using index distance?
+
+ What advantage do negative costs bring to the algorithm?
+
+ How do rr and rrr reduce total move count in practice?
+
+ Why does inserting based on target_pos preserve sort order better than choosing closest value?
+
+ What makes the improved approach deterministic and predictable across all input sizes?

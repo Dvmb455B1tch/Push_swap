@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvmb455b1tch <dvmb455b1tch@student.42.f    +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:57:29 by riramana          #+#    #+#             */
-/*   Updated: 2025/07/13 18:44:12 by dvmb455b1tc      ###   ########.fr       */
+/*   Updated: 2025/05/13 17:08:40 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_node	*get_second_last_node(t_node *stack);
 int		stack_size(t_node *stack);
 void	free_stack(t_node **stack);
 int		is_sorted(t_node *stack);
+void	free_and_exit(t_node **stack_a, t_node **stack_b);
 
 /*Swap operations*/
 void	swap(t_node *stack);
