@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:14:14 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/14 11:21:29 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:09:07 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

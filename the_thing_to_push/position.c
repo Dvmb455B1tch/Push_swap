@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:39:13 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/14 11:41:46 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:35:31 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
