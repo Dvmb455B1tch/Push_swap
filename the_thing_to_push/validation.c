@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvmb455b1tch <dvmb455b1tch@student.42.f    +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:20:51 by riramana          #+#    #+#             */
-/*   Updated: 2025/07/13 19:13:54 by dvmb455b1tc      ###   ########.fr       */
+/*   Updated: 2025/07/19 17:15:04 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	has_duplicates(char **av)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (av[i])
-	{
-		j = 1;
-		while (av[j])
-		{
-			if (i != j && ft_atoi(av[i]) == ft_atoi(av[j]))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 
 static int	check_values_in_str(char *str, long *values, int *count)
 {
@@ -114,7 +94,7 @@ static int	process_arguments(int ac, char **av, long *values)
 		}
 		i++;
 	}
-	return (!has_duplicates(av));
+	return (1);
 }
 
 int	check_input(int ac, char **av)

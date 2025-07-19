@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:10:45 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/13 14:17:56 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:21:14 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

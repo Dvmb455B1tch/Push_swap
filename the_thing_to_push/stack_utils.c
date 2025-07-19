@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:18:51 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/18 11:18:53 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:44:35 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

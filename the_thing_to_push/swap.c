@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:57:22 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/13 14:04:13 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:44:46 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

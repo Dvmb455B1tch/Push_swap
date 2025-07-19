@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:06:32 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/13 09:18:10 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:42:32 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

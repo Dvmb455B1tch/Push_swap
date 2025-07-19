@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:19:03 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/18 11:19:05 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:42:25 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static void	parse_line(t_node **stack_a, char *str)
 			buffer[k++] = str[j++];
 		buffer[k] = '\0';
 		num = ft_atoi(buffer);
-		if (num > 2147483647 || num < -2147483648)
-			handle_parse_error(stack_a);
 		new = new_node((int)num);
 		if (!new)
 			handle_parse_error(stack_a);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:19:15 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/13 14:29:30 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:44:18 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

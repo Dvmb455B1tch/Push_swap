@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cost.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: riramana <riramana@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:44:50 by riramana          #+#    #+#             */
-/*   Updated: 2025/05/14 11:13:12 by riramana         ###   ########.fr       */
+/*   Updated: 2025/07/19 20:42:21 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

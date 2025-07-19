@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvmb455b1tch <dvmb455b1tch@student.42.f    +#+  +:+       +#+        */
+/*   By: riramana <riramana@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:57:29 by riramana          #+#    #+#             */
-/*   Updated: 2025/07/13 19:14:18 by dvmb455b1tc      ###   ########.fr       */
+/*   Updated: 2025/07/19 17:16:03 by riramana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	shift_stack(t_node **stack_a);
 /* Parsing and validation */
 int		check_input(int ac, char **av);
 int		is_number(char *str);
-int		has_duplicates(char **av);
 t_node	*parse_input(int ac, char **av);
 void	assign_index(t_node *stack_a, int size);
 
